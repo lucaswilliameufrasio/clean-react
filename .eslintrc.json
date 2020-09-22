@@ -17,7 +17,7 @@
        "@typescript-eslint/consistent-type-definitions": "off",
        "@typescript-eslint/return-await": "off",
        "@typescript-eslint/comma-spacing": "off",
-       "react/use-jsx-uses-react": "error",
-       "react/use-jsx-uses-vars": "error"
+       "react/jsx-uses-react": "error",
+       "react/jsx-uses-vars": "error"
    }
 }

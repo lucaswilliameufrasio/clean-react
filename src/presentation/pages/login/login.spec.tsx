@@ -7,20 +7,7 @@ import {
   cleanup
 } from '@testing-library/react'
 import Login from './login'
-import { ValidationStub } from '@/presentation/test'
-import { Authentication, AuthenticationParams } from '@/domain/usecases'
-import { AccountModel } from '@/domain/models'
-import { mockAccountModel } from '@/domain/test'
-
-class AuthenticationSpy implements Authentication {
-  account = mockAccountModel()
-  params: AuthenticationParams
-
-  async auth (params: AuthenticationParams): Promise<AccountModel> {
-    this.params = params
-    return this.account
-  }
-}
+import { ValidationStub, AuthenticationSpy } from '@/presentation/test'
 
 type SutTypes = {
   sut: RenderResult
@@ -35,7 +22,9 @@ const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   const authenticationSpy = new AuthenticationSpy()
   validationStub.errorMessage = params?.validationError
-  const sut = render(<Login validation={validationStub} authentication={authenticationSpy} />)
+  const sut = render(
+    <Login validation={validationStub} authentication={authenticationSpy} />
+  )
 
   return {
     sut,
@@ -79,7 +68,9 @@ describe('Login Component', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     const passwordInput = sut.getByTestId('password')
-    fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
+    fireEvent.input(passwordInput, {
+      target: { value: faker.internet.password() }
+    })
     const passwordStatus = sut.getByTestId('password-status')
 
     expect(passwordStatus.title).toBe(validationError)
@@ -99,7 +90,9 @@ describe('Login Component', () => {
   test('Should show valid password state if Validation succeeds', () => {
     const { sut } = makeSut()
     const passwordInput = sut.getByTestId('password')
-    fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
+    fireEvent.input(passwordInput, {
+      target: { value: faker.internet.password() }
+    })
     const passwordStatus = sut.getByTestId('password-status')
 
     expect(passwordStatus.title).toBe('Tudo certo!')
@@ -111,7 +104,9 @@ describe('Login Component', () => {
     const emailInput = sut.getByTestId('email')
     fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
     const passwordInput = sut.getByTestId('password')
-    fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
+    fireEvent.input(passwordInput, {
+      target: { value: faker.internet.password() }
+    })
     const submitButton = sut.getByTestId('submit') as HTMLButtonElement
 
     expect(submitButton.disabled).toBe(false)
@@ -122,7 +117,9 @@ describe('Login Component', () => {
     const emailInput = sut.getByTestId('email')
     fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
     const passwordInput = sut.getByTestId('password')
-    fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
+    fireEvent.input(passwordInput, {
+      target: { value: faker.internet.password() }
+    })
     const submitButton = sut.getByTestId('submit')
     fireEvent.click(submitButton)
     const spinner = sut.getByTestId('spinner')

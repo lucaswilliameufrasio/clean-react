@@ -20,4 +20,12 @@ describe('EmailValidation', () => {
 
     expect(error).toBeFalsy()
   })
+
+  test('Should return falsy if email is empty', () => {
+    const fieldName = faker.database.column()
+    const sut = makeSut(fieldName)
+    const error = sut.validate('')
+
+    expect(error).toBeFalsy()
+  })
 })

@@ -4,20 +4,27 @@
             "version": "detect"
         }
     },
-   "extends": [
-    "standard-with-typescript",
-    "plugin:react/recommended"
-   ],
-   "plugins": ["react"],
-   "parserOptions": {
-       "project": "./tsconfig.json"
-   },
-   "rules": {
-       "@typescript-eslint/strict-boolean-expressions": "off",
-       "@typescript-eslint/consistent-type-definitions": "off",
-       "@typescript-eslint/return-await": "off",
-       "@typescript-eslint/comma-spacing": "off",
-       "react/jsx-uses-react": "error",
-       "react/jsx-uses-vars": "error"
-   }
+    "extends": [
+        "standard-with-typescript",
+        "plugin:react/recommended",
+        "plugin:cypress/recommended"
+    ],
+    "env": {
+        "cypress/globals": true
+    },
+    "plugins": [
+        "react",
+        "cypress"
+    ],
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "rules": {
+        "@typescript-eslint/strict-boolean-expressions": "off",
+        "@typescript-eslint/consistent-type-definitions": "off",
+        "@typescript-eslint/return-await": "off",
+        "@typescript-eslint/comma-spacing": "off",
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error"
+    }
 }

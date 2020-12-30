@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Styles from './signup-styles.scss'
 import { LoginHeader, Footer, Input, FormStatus, SubmitButton } from '@/presentation/components'
-import Context from '@/presentation/contexts/form/form-context'
+import { FormContext, ApiContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols/validation'
-import { AddAccount, UpdateCurrentAccount } from '@/domain/usecases'
+import { AddAccount } from '@/domain/usecases'
 
 type Props = {
   validation: Validation
   addAccount: AddAccount
-  updateCurrentAccount: UpdateCurrentAccount
 }
 
-const SignUp: React.FC<Props> = ({ validation, addAccount, updateCurrentAccount }: Props) => {
+const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
+  const { setCurrentAccount } = useContext(ApiContext)
   const history = useHistory()
   const [state, setState] = useState({
     isLoading: false,
@@ -59,7 +59,7 @@ const SignUp: React.FC<Props> = ({ validation, addAccount, updateCurrentAccount 
         password: state.password,
         passwordConfirmation: state.passwordConfirmation
       })
-      await updateCurrentAccount.save(account)
+      setCurrentAccount(account)
       history.replace('/')
     } catch (error) {
       setState({
@@ -73,7 +73,7 @@ const SignUp: React.FC<Props> = ({ validation, addAccount, updateCurrentAccount 
   return (
     <div className={Styles.signupWrap}>
       <LoginHeader />
-      <Context.Provider value={{ state, setState }} >
+      <FormContext.Provider value={{ state, setState }} >
         <form data-testid="form" className={Styles.form} onSubmit={handleSubmit}>
           <h2>Login</h2>
           <Input type="text" name="name" placeholder="Digite seu nome" />
@@ -90,7 +90,7 @@ const SignUp: React.FC<Props> = ({ validation, addAccount, updateCurrentAccount 
           <Link data-testid="login-link" replace to="/login" className={Styles.link}>Voltar para Login</Link>
           <FormStatus />
         </form>
-      </Context.Provider>
+      </FormContext.Provider>
       <Footer />
     </div>
   )

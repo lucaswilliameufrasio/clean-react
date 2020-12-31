@@ -60,11 +60,8 @@ describe('SignUp Component', () => {
   test('Should start with initial state', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
-
-    Helper.testChildCount('error-wrap', 0)
-
-    Helper.testButtonIsDisabled('submit', true)
-
+    expect(screen.getByTestId('error-wrap').children).toHaveLength(0)
+    expect(screen.getByTestId('submit')).toBeDisabled()
     Helper.testStatusForField('name', validationError)
     Helper.testStatusForField('email', validationError)
     Helper.testStatusForField('password', validationError)
@@ -75,7 +72,6 @@ describe('SignUp Component', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
     Helper.populateField('name')
-
     Helper.testStatusForField('name', validationError)
   })
 
@@ -83,7 +79,6 @@ describe('SignUp Component', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
     Helper.populateField('email')
-
     Helper.testStatusForField('email', validationError)
   })
 
@@ -91,7 +86,6 @@ describe('SignUp Component', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
     Helper.populateField('password')
-
     Helper.testStatusForField('password', validationError)
   })
 
@@ -99,35 +93,30 @@ describe('SignUp Component', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
     Helper.populateField('passwordConfirmation')
-
     Helper.testStatusForField('passwordConfirmation', validationError)
   })
 
   test('Should show valid name state if Validation succeeds', () => {
     makeSut()
     Helper.populateField('name')
-
     Helper.testStatusForField('name')
   })
 
   test('Should show valid email state if Validation succeeds', () => {
     makeSut()
     Helper.populateField('email')
-
     Helper.testStatusForField('email')
   })
 
   test('Should show valid password state if Validation succeeds', () => {
     makeSut()
     Helper.populateField('password')
-
     Helper.testStatusForField('password')
   })
 
   test('Should show valid passwordConfirmation state if Validation succeeds', () => {
     makeSut()
     Helper.populateField('passwordConfirmation')
-
     Helper.testStatusForField('passwordConfirmation')
   })
 
@@ -137,15 +126,13 @@ describe('SignUp Component', () => {
     Helper.populateField('email')
     Helper.populateField('password')
     Helper.populateField('passwordConfirmation')
-
-    Helper.testButtonIsDisabled('submit', false)
+    expect(screen.getByTestId('submit')).toBeEnabled()
   })
 
   test('Should show spinner on submit', async () => {
     makeSut()
     await simulateValidSubmit()
-
-    Helper.testElementExists('spinner')
+    expect(screen.queryByTestId('spinner')).toBeInTheDocument()
   })
 
   test('Should call AddAccount with correct values', async () => {
@@ -154,7 +141,6 @@ describe('SignUp Component', () => {
     const email = faker.internet.email()
     const password = faker.internet.password()
     await simulateValidSubmit(name, email, password)
-
     expect(addAccountSpy.params).toEqual({
       name,
       email,
@@ -167,7 +153,6 @@ describe('SignUp Component', () => {
     const { addAccountSpy } = makeSut()
     await simulateValidSubmit()
     await simulateValidSubmit()
-
     expect(addAccountSpy.callsCount).toBe(1)
   })
 
@@ -175,7 +160,6 @@ describe('SignUp Component', () => {
     const validationError = faker.random.words()
     const { addAccountSpy } = makeSut({ validationError })
     await simulateValidSubmit()
-
     expect(addAccountSpy.callsCount).toBe(0)
   })
 
@@ -184,15 +168,13 @@ describe('SignUp Component', () => {
     const error = new EmailInUseError()
     jest.spyOn(addAccountSpy, 'add').mockRejectedValueOnce(error)
     await simulateValidSubmit()
-
-    Helper.testElementText('main-error', error.message)
-    Helper.testChildCount('error-wrap', 1)
+    expect(screen.getByTestId('main-error')).toHaveTextContent(error.message)
+    expect(screen.getByTestId('error-wrap').children).toHaveLength(1)
   })
 
   test('Should SetCurrentAccount on success', async () => {
     const { addAccountSpy, setCurrentAccountMock } = makeSut()
     await simulateValidSubmit()
-
     expect(setCurrentAccountMock).toHaveBeenCalledWith(addAccountSpy.account)
     expect(history.length).toBe(1)
     expect(history.location.pathname).toBe('/')
@@ -202,7 +184,6 @@ describe('SignUp Component', () => {
     makeSut()
     const loginLink = screen.getByTestId('login-link')
     fireEvent.click(loginLink)
-
     expect(history.length).toBe(1)
     expect(history.location.pathname).toBe('/login')
   })

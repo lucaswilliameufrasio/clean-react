@@ -13,6 +13,7 @@ export class AuthorizeHttpGetClientDecorator implements HttpGetClient {
       params = {
         ...params,
         headers: {
+          ...params.headers,
           'x-access-token': account.accessToken
         }
       }

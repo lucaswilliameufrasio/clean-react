@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import FlipMove from 'react-flip-move'
 import Styles from './survey-result-styles.scss'
 import { Calendar, Error, Footer, Header, Loading } from '@/presentation/components'
+import { useErrorHandler } from '@/presentation/hooks'
 import { LoadSurveyResult } from '@/domain/usecases'
 
 type Props = {
@@ -15,10 +16,14 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
     surveyResult: null as LoadSurveyResult.Model
   })
 
+  const handleError = useErrorHandler((error: Error) => {
+    setState(old => ({ ...old, surveyResult: null, error: error.message }))
+  })
+
   useEffect(() => {
     loadSurveyResult.load()
       .then(surveyResult => setState(old => ({ ...old, surveyResult })))
-      .catch()
+      .catch(handleError)
   }, [])
 
   return (
@@ -41,10 +46,10 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
               ))}
             </FlipMove>
             <button>Voltar</button>
-            {state.isLoading && <Loading />}
-            {state.error && <Error error={state.error} reload={() => {}} />}
           </>
         )}
+        {state.isLoading && <Loading />}
+        {state.error && <Error error={state.error} reload={() => {}} />}
       </div>
       <Footer />
     </div>

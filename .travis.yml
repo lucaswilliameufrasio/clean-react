@@ -1,11 +1,20 @@
 language: node_js
 node_js: 
   - 12
+apt_packages:
+  - libgconf-2-4
+cache:
+  npm: true
+  directories:
+    - ~/.cache
 script:
   - eslint 'src/**'
   - yarn test:coveralls
+  - yarn test:cypress:ci
 deploy:
   provider: heroku
   api_key: $HEROKU_API_KEY
   app: fordevs-react-lucas
   skip_cleanup: true
+notifications:
+  email: false

@@ -1,15 +1,11 @@
 import React from 'react'
 import Styles from './answer-styles.scss'
+import { SurveyResultAnswerModel } from '@/domain/models'
 
 type Props = {
-  answer: {
-    image?: string
-    answer: string
-    count: number
-    percent: number
-    isCurrentAccountAnswer: boolean
-  }
+  answer: SurveyResultAnswerModel
 }
+
 const Answer: React.FC<Props> = ({ answer }: Props) => {
   const activeClassName = answer.isCurrentAccountAnswer ? Styles.active : ''
   return (

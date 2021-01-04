@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import Styles from './survey-result-styles.scss'
 import { SurveyResultData, surveyResultState, onSurveyAnswerState } from './components'
 import { useErrorHandler } from '@/presentation/hooks'
@@ -12,26 +12,25 @@ type Props = {
 }
 
 const SurveyResult: React.FC<Props> = ({ loadSurveyResult, saveSurveyResult }: Props) => {
+  const resetSurveyResultState = useResetRecoilState(surveyResultState)
   const [state, setState] = useRecoilState(surveyResultState)
-
   const handleError = useErrorHandler((error: Error) => {
     setState(old => ({ ...old, surveyResult: null, isLoading: false, error: error.message }))
   })
-
   const setOnAnswer = useSetRecoilState(onSurveyAnswerState)
   const onAnswer = (answer: string): void => {
-    if (state.isLoading) {
-      return
+    if (!state.isLoading) {
+      setState(old => ({ ...old, isLoading: true }))
+      saveSurveyResult.save({ answer })
+        .then(surveyResult => setState(old => ({ ...old, isLoading: false, surveyResult })))
+        .catch(handleError)
     }
-    setState(old => ({ ...old, isLoading: true }))
-    saveSurveyResult.save({ answer })
-      .then(surveyResult => setState(old => ({ ...old, isLoading: false, surveyResult })))
-      .catch(handleError)
   }
 
   const reload = (): void => setState(old => ({ ...old, isLoading: false, error: '', reload: !old.reload }))
 
   useEffect(() => {
+    resetSurveyResultState()
     setOnAnswer({ onAnswer })
   }, [])
 

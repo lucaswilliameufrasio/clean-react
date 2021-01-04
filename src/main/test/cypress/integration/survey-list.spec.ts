@@ -41,8 +41,8 @@ describe('SurveyList', () => {
     cy.getByTestId('username').should('contain.text', account.name)
   })
 
-  it('Should logout on on logout link click', () => {
-    mockUnexpectedError()
+  it('Should logout on logout link click', () => {
+    mockSuccess()
     cy.visit('')
     cy.getByTestId('logout').click()
     Helper.testUrl('/login')

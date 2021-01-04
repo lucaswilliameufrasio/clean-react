@@ -1,12 +1,12 @@
+import { Header, currentAccountState } from '@/presentation/components'
+import { AccountModel } from '@/domain/models'
+import { mockAccountModel } from '@/domain/test'
+
 import React from 'react'
 import { RecoilRoot } from 'recoil'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory, MemoryHistory } from 'history'
 import { fireEvent, render, screen } from '@testing-library/react'
-import { Header } from '@/presentation/components'
-import { AccountModel } from '@/domain/models'
-import { mockAccountModel } from '@/domain/test'
-import { currentAccountState } from '../atoms/atoms'
 
 type SutTypes = {
   history: MemoryHistory

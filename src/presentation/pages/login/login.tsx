@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
-import Styles from './login-styles.scss'
 import { FormStatus, Input, loginState, SubmitButton } from './components'
+import Styles from './login-styles.scss'
 import { LoginHeader, Footer, currentAccountState } from '@/presentation/components'
 import { Validation } from '@/presentation/protocols/validation'
 import { Authentication } from '@/domain/usecases'
+
+import React, { useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 
 type Props = {
   validation: Validation

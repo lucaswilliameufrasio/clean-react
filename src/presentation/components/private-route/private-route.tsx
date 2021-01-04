@@ -1,7 +1,8 @@
+import { currentAccountState } from '@/presentation/components'
+
 import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { Redirect, Route, RouteProps } from 'react-router-dom'
-import { currentAccountState } from '../atoms/atoms'
 
 const PrivateRoute: React.FC<RouteProps> = (props: RouteProps) => {
   const { getCurrentAccount } = useRecoilValue(currentAccountState)

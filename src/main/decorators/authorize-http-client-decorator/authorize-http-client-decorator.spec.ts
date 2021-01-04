@@ -1,7 +1,8 @@
 import { AuthorizeHttpClientDecorator } from '@/main/decorators'
-import { HttpRequest } from '@/data/protocols/http'
 import { GetStorageSpy, HttpClientSpy, mockHttpRequest } from '@/data/test'
+import { HttpRequest } from '@/data/protocols/http'
 import { mockAccountModel } from '@/domain/test'
+
 import faker from 'faker'
 
 type SutTypes = {
@@ -25,7 +26,9 @@ const makeSut = (): SutTypes => {
 describe('AuthorizeHttpClientDecorator', () => {
   test('Should call GetStorage with correct value', async () => {
     const { sut, getStorageSpy } = makeSut()
+
     await sut.request(mockHttpRequest())
+
     expect(getStorageSpy.key).toBe('account')
   })
 
@@ -38,7 +41,9 @@ describe('AuthorizeHttpClientDecorator', () => {
         field: faker.random.words()
       }
     }
+
     await sut.request(httpRequest)
+
     expect(httpClientSpy.url).toBe(httpRequest.url)
     expect(httpClientSpy.method).toBe(httpRequest.method)
     expect(httpClientSpy.headers).toEqual(httpRequest.headers)
@@ -51,7 +56,9 @@ describe('AuthorizeHttpClientDecorator', () => {
       url: faker.internet.url(),
       method: faker.random.arrayElement(['get', 'post', 'put', 'delete'])
     }
+
     await sut.request(httpRequest)
+
     expect(httpClientSpy.url).toBe(httpRequest.url)
     expect(httpClientSpy.headers).toEqual({
       'x-access-token': getStorageSpy.value.accessToken
@@ -69,7 +76,9 @@ describe('AuthorizeHttpClientDecorator', () => {
         field
       }
     }
+
     await sut.request(httpRequest)
+
     expect(httpClientSpy.url).toBe(httpRequest.url)
     expect(httpClientSpy.headers).toEqual({
       field,
@@ -79,7 +88,9 @@ describe('AuthorizeHttpClientDecorator', () => {
 
   test('Should return the same result as HttpClient', async () => {
     const { sut, httpClientSpy } = makeSut()
+
     const httpResponse = await sut.request(mockHttpRequest())
+
     expect(httpResponse).toEqual(httpClientSpy.response)
   })
 })

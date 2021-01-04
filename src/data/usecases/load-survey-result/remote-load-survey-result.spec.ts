@@ -2,6 +2,7 @@ import { RemoteLoadSurveyResult } from '@/data/usecases'
 import { HttpClientSpy, mockRemoteSurveyResultModel } from '@/data/test'
 import { HttpStatusCode } from '@/data/protocols/http'
 import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
+
 import faker from 'faker'
 
 type SutTypes = {
@@ -25,7 +26,9 @@ describe('RemoteLoadSurveyResult', () => {
       statusCode: HttpStatusCode.ok,
       body: mockRemoteSurveyResultModel()
     }
+
     await sut.load()
+
     expect(httpClientSpy.url).toBe(url)
     expect(httpClientSpy.method).toBe('get')
   })
@@ -35,7 +38,9 @@ describe('RemoteLoadSurveyResult', () => {
     httpClientSpy.response = {
       statusCode: HttpStatusCode.forbidden
     }
+
     const promise = sut.load()
+
     await expect(promise).rejects.toThrow(new AccessDeniedError())
   })
 
@@ -44,7 +49,9 @@ describe('RemoteLoadSurveyResult', () => {
     httpClientSpy.response = {
       statusCode: HttpStatusCode.notFound
     }
+
     const promise = sut.load()
+
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
@@ -53,7 +60,9 @@ describe('RemoteLoadSurveyResult', () => {
     httpClientSpy.response = {
       statusCode: HttpStatusCode.serverError
     }
+
     const promise = sut.load()
+
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
@@ -64,7 +73,9 @@ describe('RemoteLoadSurveyResult', () => {
       statusCode: HttpStatusCode.ok,
       body: httpResult
     }
+
     const httpResponse = await sut.load()
+
     expect(httpResponse).toEqual({
       question: httpResult.question,
       answers: httpResult.answers,

@@ -1,13 +1,14 @@
+import { currentAccountState } from '@/presentation/components'
+import { SurveyList } from '@/presentation/pages'
+import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
+import { LoadSurveyListSpy, mockAccountModel } from '@/domain/test'
+import { AccountModel } from '@/domain/models'
+
 import React from 'react'
 import { RecoilRoot } from 'recoil'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory, MemoryHistory } from 'history'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { SurveyList } from '@/presentation/pages'
-import { currentAccountState } from '@/presentation/components'
-import { AccountModel } from '@/domain/models'
-import { LoadSurveyListSpy, mockAccountModel } from '@/domain/test'
-import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
 
 type SutTypes = {
   loadSurveyListSpy: LoadSurveyListSpy

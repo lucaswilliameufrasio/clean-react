@@ -1,5 +1,6 @@
-import React, { useRef } from 'react'
 import Styles from './input-styles.scss'
+
+import React, { useRef } from 'react'
 
 type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
   state: any

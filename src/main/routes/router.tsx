@@ -1,9 +1,10 @@
-import React from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import { RecoilRoot } from 'recoil'
 import { getCurrentAccountAdapter, setCurrentAccountAdapter } from '@/main/adapters'
 import { makeLogin, makeSignUp, makeSurveyList, makeSurveyResult } from '@/main/factories/pages'
 import { PrivateRoute, currentAccountState } from '@/presentation/components'
+
+import React from 'react'
+import { RecoilRoot } from 'recoil'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 const Router: React.FC = () => {
   const state = {

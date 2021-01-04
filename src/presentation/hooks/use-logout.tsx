@@ -1,6 +1,7 @@
+import { currentAccountState } from '@/presentation/components'
+
 import { useHistory } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
-import { currentAccountState } from '../components'
 
 type ResultType = () => void
 

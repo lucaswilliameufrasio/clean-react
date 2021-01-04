@@ -1,10 +1,11 @@
-import React from 'react'
-import { fireEvent, render, screen } from '@testing-library/react'
-import { createMemoryHistory, MemoryHistory } from 'history'
-import { Router } from 'react-router-dom'
 import { SurveyItem } from '@/presentation/pages/survey-list/components'
 import { IconName } from '@/presentation/components'
 import { mockSurveyModel } from '@/domain/test'
+
+import React from 'react'
+import { Router } from 'react-router-dom'
+import { createMemoryHistory, MemoryHistory } from 'history'
+import { fireEvent, render, screen } from '@testing-library/react'
 
 type SutTypes = {
   history: MemoryHistory

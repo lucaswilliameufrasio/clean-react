@@ -10,7 +10,6 @@ type Props = {
 }
 const Result: React.FC<Props> = ({ surveyResult }: Props) => {
   const { goBack } = useHistory()
-
   return (
     <>
       <hgroup>

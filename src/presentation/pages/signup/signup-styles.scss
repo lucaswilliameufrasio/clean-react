@@ -1,12 +1,12 @@
 @import "../../styles/colors.scss";
 
-.signup {
+.signupWrap {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   justify-content: space-between;
 
-  .signupWrap {
+  .form {
     display: flex;
     flex-direction: column;
     width: 400px;
